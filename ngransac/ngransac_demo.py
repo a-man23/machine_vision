@@ -57,7 +57,15 @@ if len(model_file) == 0:
     print("No model file specified. Inferring pre-trained model from given parameters:")
     print(model_file)
 
-model = CNNet(getattr(opt, 'resblocks', 2)) # default resblock count if not in args
+# Get resblocks from args (util.create_parser defaults to 12, but we want to allow override)
+# If model file path contains 'synthetic', default to 2 resblocks (what we trained with)
+if 'synthetic' in model_file.lower():
+	resblocks = getattr(opt, 'resblocks', 2)
+	print(f"Detected synthetic model, using {resblocks} resblocks")
+else:
+	resblocks = getattr(opt, 'resblocks', 12)  # Default for pre-trained models
+
+model = CNNet(resblocks)
 model.load_state_dict(torch.load(model_file))
 model = model.cuda()
 model.eval()

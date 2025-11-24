@@ -98,5 +98,3 @@ class SparseDataset(Dataset):
 		gt_F = K2.inverse().transpose(0, 1).mm(gt_E).mm(K1.inverse())
 
 		return correspondences, gt_F, gt_E, gt_R, gt_t, K1, K2, im_size1, im_size2
-
-

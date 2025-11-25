@@ -1,4 +1,3 @@
-python ngransac_demo.py -img1 images/demo1.jpg -fl1 900 -img2 images/demo2.jpg -fl2 900 -m synthetic_weights_e2e/weights_epoch_21.net -rb 2
+python ngransac_demo.py -img1 images/demo1.jpg -fl1 900 -img2 images/demo2.jpg -fl2 900 -m synthetic_weights_e2e/weights_best.net -rb 2
 
 use the above to run the demo with the synthetic model^^^
-(21st epoch because that is where validation loss starts to plateau)

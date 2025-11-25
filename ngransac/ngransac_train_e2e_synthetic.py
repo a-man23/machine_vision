@@ -18,7 +18,7 @@ output_weights_folder = "synthetic_weights_e2e"
 os.makedirs(output_weights_folder, exist_ok=True)
 
 # Training parameters
-epochs = 25
+epochs = 50
 batch_size = 8
 learning_rate = 0.00001
 resblocks = 2

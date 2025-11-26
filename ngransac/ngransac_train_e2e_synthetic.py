@@ -12,15 +12,66 @@ from network import CNNet
 from dataset_synthetic import SparseDatasetSynthetic
 import util
 
+def collate_fn_pad(batch):
+	"""
+	Custom collate function to handle variable-length correspondences.
+	Pads correspondences to the maximum length in the batch.
+	"""
+	correspondences_list = []
+	gt_F_list = []
+	gt_E_list = []
+	gt_R_list = []
+	gt_t_list = []
+	K1_list = []
+	K2_list = []
+	im_size1_list = []
+	im_size2_list = []
+	
+	# Find maximum number of correspondences in the batch
+	max_corrs = max(item[0].shape[1] for item in batch)
+	
+	for correspondences, gt_F, gt_E, gt_R, gt_t, K1, K2, im_size1, im_size2 in batch:
+		# correspondences shape: (5, N, 1)
+		num_corrs = correspondences.shape[1]
+		
+		# Pad correspondences to max_corrs
+		if num_corrs < max_corrs:
+			# Pad with zeros along dimension 1
+			padding = torch.zeros(5, max_corrs - num_corrs, 1)
+			correspondences = torch.cat([correspondences, padding], dim=1)
+		
+		correspondences_list.append(correspondences)
+		gt_F_list.append(gt_F)
+		gt_E_list.append(gt_E)
+		gt_R_list.append(gt_R)
+		gt_t_list.append(gt_t)
+		K1_list.append(K1)
+		K2_list.append(K2)
+		im_size1_list.append(im_size1)
+		im_size2_list.append(im_size2)
+	
+	# Stack all tensors
+	correspondences = torch.stack(correspondences_list, dim=0)
+	gt_F = torch.stack(gt_F_list, dim=0)
+	gt_E = torch.stack(gt_E_list, dim=0)
+	gt_R = torch.stack(gt_R_list, dim=0)
+	gt_t = torch.stack(gt_t_list, dim=0)
+	K1 = torch.stack(K1_list, dim=0)
+	K2 = torch.stack(K2_list, dim=0)
+	im_size1 = torch.stack(im_size1_list, dim=0)
+	im_size2 = torch.stack(im_size2_list, dim=0)
+	
+	return correspondences, gt_F, gt_E, gt_R, gt_t, K1, K2, im_size1, im_size2
+
 # Configuration
-synthetic_data_folder = "synthetic_train"
-output_weights_folder = "synthetic_weights_e2e"
+synthetic_data_folder = "synthetic_train2"
+output_weights_folder = "synthetic_weights_e2e_2"
 os.makedirs(output_weights_folder, exist_ok=True)
 
 # Training parameters
 epochs = 50
 batch_size = 8
-learning_rate = 0.00001
+learning_rate = 0.0001  # Increased from 0.00001 for faster learning
 resblocks = 2
 hyps = 16
 sample_count = 4
@@ -36,7 +87,14 @@ early_stopping_min_delta = 0.0001  # Minimum change to qualify as an improvement
 early_stopping_enabled = True
 
 # Create full list of .npz files
-npz_files = [os.path.join(synthetic_data_folder, f) for f in sorted(os.listdir(synthetic_data_folder)) if f.endswith('.npz')]
+all_npz_files = [os.path.join(synthetic_data_folder, f) for f in sorted(os.listdir(synthetic_data_folder)) if f.endswith('.npz')]
+
+# Randomly select 2000 files (or all if fewer than 2000 available)
+num_files_to_select = min(2000, len(all_npz_files))
+npz_files = random.sample(all_npz_files, num_files_to_select)
+
+print(f'Total .npz files available: {len(all_npz_files)}')
+print(f'Randomly selected: {len(npz_files)} files')
 
 # Split into train/val (90/10 split)
 split_idx = int(0.9 * len(npz_files))
@@ -51,8 +109,8 @@ print(f'  Validation samples: {len(val_files)}')
 trainset = SparseDatasetSynthetic([train_files], ratio_threshold, nfeatures, fmat=False, overwrite_side_info=False)
 valset = SparseDatasetSynthetic([val_files], ratio_threshold, nfeatures, fmat=False, overwrite_side_info=False)
 
-trainset_loader = torch.utils.data.DataLoader(trainset, shuffle=True, num_workers=0, batch_size=batch_size)
-valset_loader = torch.utils.data.DataLoader(valset, shuffle=False, num_workers=0, batch_size=batch_size)
+trainset_loader = torch.utils.data.DataLoader(trainset, shuffle=True, num_workers=0, batch_size=batch_size, collate_fn=collate_fn_pad)
+valset_loader = torch.utils.data.DataLoader(valset, shuffle=False, num_workers=0, batch_size=batch_size, collate_fn=collate_fn_pad)
 
 print(f"\nImage pairs: {len(trainset)}\n")
 

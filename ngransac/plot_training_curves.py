@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import sys
 import os
 
-def parse_train_log(log_file='synthetic_weights_e2e/train_log.txt'):
+def parse_train_log(log_file='synthetic_weights_e2e_2/train_log.txt'):
 	"""Parse train_log.txt to extract train and validation losses."""
 	train_losses_iter = []
 	train_losses_epoch = []
@@ -88,7 +88,7 @@ def plot_training_curves(log_file, save_path=None):
 
 if __name__ == '__main__':
 	# Default log file path
-	default_log_file = 'synthetic_weights_e2e/train_log.txt'
+	default_log_file = 'synthetic_weights_e2e_2/train_log.txt'
 	
 	if len(sys.argv) < 2:
 		# Use default path if no arguments provided

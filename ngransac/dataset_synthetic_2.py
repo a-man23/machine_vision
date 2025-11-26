@@ -8,7 +8,7 @@ def random_intrinsics(fx=800, fy=800, cx=320, cy=240):
                   [0,  0,  1]], dtype=np.float32)
     return K
 
-def random_pose(max_angle_deg=5, max_translation=0.1):
+def random_pose(max_angle_deg=15, max_translation=0.1):
     angle = np.deg2rad(np.random.uniform(-max_angle_deg, max_angle_deg, 3))
     Rx = cv2.Rodrigues(np.array([angle[0],0,0]))[0]
     Ry = cv2.Rodrigues(np.array([0,angle[1],0]))[0]
@@ -35,15 +35,14 @@ def project(K,R,t,pts_3D):
 def generate_ratios(n, good_mask):
     ratios = np.zeros((1,n,1), dtype=np.float32)
     ratios[0, good_mask, 0] = np.random.uniform(0.1, 0.5, good_mask.sum())
-    # Outliers: beta skewed toward higher ratios, then scale to 0.5-0.99
-    beta_samples = np.random.beta(a=1, b=5, size=(~good_mask).sum())  # skewed toward 0
-    # Flip to skew toward 1: (1 - beta) → now most are close to 1
-    beta_samples = 1.0 - beta_samples
-    # Scale to [0.5, 0.99]
-    ratios[0, ~good_mask, 0] = 0.5 + beta_samples * 0.49  # 0.5 to 0.99
+    # Outliers: mostly high ratios but some small values (long tail)
+    # Beta(a, b) with a < b skews toward 0; flip to skew toward 1
+    beta_samples = np.random.beta(a=0.8, b=5, size=(~good_mask).sum())  # skew toward 0
+    beta_samples = 1.0 - beta_samples  # now skewed toward 1
+    ratios[0, ~good_mask, 0] = beta_samples  # no clipping, can go down toward 0
     return ratios
 
-def generate_synthetic_sample(n_corr=3000, outlier_ratio=0.95, noise_std=1):
+def generate_synthetic_sample(n_corr=3000, outlier_ratio=0.9, noise_std=1):
     K1 = random_intrinsics()
     K2 = random_intrinsics()
     R,t = random_pose()
@@ -61,7 +60,20 @@ def generate_synthetic_sample(n_corr=3000, outlier_ratio=0.95, noise_std=1):
     good_mask = np.ones(n,dtype=bool)
     good_mask[out_idx] = False
 
-    pts2[0,out_idx,:] = np.random.uniform(0,640,(n_out,2))
+    # Split outliers into near and far
+    n_near = int(0.6 * n_out)
+    n_far = n_out - n_near
+    out_indices = out_idx
+    near_idx = np.random.choice(out_indices, n_near, replace=False)
+    far_idx = np.setdiff1d(out_indices, near_idx)
+
+    # Near outliers: small random offset from correct projection
+    pts2[0, near_idx, :] += np.random.normal(0, 20, (n_near,2))
+
+    # Far outliers: completely random in image
+    pts2[0, far_idx, :] = np.random.uniform(0, 640, (n_far,2))
+
+    # Generate ratios
     ratios = generate_ratios(n, good_mask)
 
     im_size1 = np.array([480,640],dtype=np.float32)

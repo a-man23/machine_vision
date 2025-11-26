@@ -43,7 +43,7 @@ def generate_ratios(n, good_mask):
     ratios[0, ~good_mask, 0] = 0.5 + beta_samples * 0.49  # 0.5 to 0.99
     return ratios
 
-def generate_synthetic_sample(n_corr=3000, outlier_ratio=0.95, noise_std=0.05):
+def generate_synthetic_sample(n_corr=3000, outlier_ratio=0.95, noise_std=1):
     K1 = random_intrinsics()
     K2 = random_intrinsics()
     R,t = random_pose()

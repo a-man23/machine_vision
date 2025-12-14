@@ -1,0 +1,103 @@
+Evaluating pair: pair_00.npz
+RANSAC:      inliers = 449 / 2439
+RANSAC:      median epipolar error = 2.9654
+NG-guided:   inliers = 413 / 2439
+NG-guided:   median epipolar error = 18.7097
+
+Saved image visualization to viz/viz_pair_00.png
+Evaluating pair: pair_01.npz
+RANSAC:      inliers = 31 / 132
+RANSAC:      median epipolar error = 3.3374
+NG-guided:   inliers = 23 / 132
+NG-guided:   median epipolar error = 6.3916
+
+Saved image visualization to viz/viz_pair_01.png
+Evaluating pair: pair_02.npz
+RANSAC:      inliers = 585 / 1585
+RANSAC:      median epipolar error = 0.8357
+NG-guided:   inliers = 486 / 1585
+NG-guided:   median epipolar error = 1.1808
+
+Saved image visualization to viz/viz_pair_02.png
+Evaluating pair: pair_03.npz
+RANSAC:      inliers = 6954 / 13204
+RANSAC:      median epipolar error = 0.4657
+NG-guided:   inliers = 5974 / 13204
+NG-guided:   median epipolar error = 0.5802
+
+Saved image visualization to viz/viz_pair_03.png
+Evaluating pair: pair_04.npz
+RANSAC:      inliers = 36 / 378
+RANSAC:      median epipolar error = 42.8302
+NG-guided:   inliers = 35 / 378
+NG-guided:   median epipolar error = 74.1767
+
+Saved image visualization to viz/viz_pair_04.png
+Evaluating pair: pair_05.npz
+RANSAC:      inliers = 2443 / 11226
+RANSAC:      median epipolar error = 1.8812
+NG-guided:   inliers = 3278 / 11226
+NG-guided:   median epipolar error = 2.3105
+
+Saved image visualization to viz/viz_pair_05.png
+Evaluating pair: pair_06.npz
+RANSAC:      inliers = 464 / 2176
+RANSAC:      median epipolar error = 1.2803
+NG-guided:   inliers = 511 / 2176
+NG-guided:   median epipolar error = 1.4596
+
+Saved image visualization to viz/viz_pair_06.png
+Evaluating pair: pair_07.npz
+RANSAC:      inliers = 643 / 2545
+RANSAC:      median epipolar error = 1.2108
+NG-guided:   inliers = 655 / 2545
+NG-guided:   median epipolar error = 1.4200
+
+Saved image visualization to viz/viz_pair_07.png
+Evaluating pair: pair_08.npz
+RANSAC:      inliers = 573 / 1650
+RANSAC:      median epipolar error = 0.7452
+NG-guided:   inliers = 591 / 1650
+NG-guided:   median epipolar error = 0.8226
+
+Saved image visualization to viz/viz_pair_08.png
+Evaluating pair: pair_09.npz
+RANSAC:      inliers = 626 / 3166
+RANSAC:      median epipolar error = 1.9856
+NG-guided:   inliers = 614 / 3166
+NG-guided:   median epipolar error = 2.3994
+
+Saved image visualization to viz/viz_pair_09.png
+Evaluating pair: pair_10.npz
+RANSAC:      inliers = 1668 / 4972
+RANSAC:      median epipolar error = 0.8775
+NG-guided:   inliers = 1390 / 4972
+NG-guided:   median epipolar error = 1.3419
+
+Saved image visualization to viz/viz_pair_10.png
+Evaluating pair: pair_11.npz
+RANSAC:      inliers = 1803 / 6733
+RANSAC:      median epipolar error = 1.3287
+NG-guided:   inliers = 1308 / 6733
+NG-guided:   median epipolar error = 1.7312
+
+Saved image visualization to viz/viz_pair_11.png
+Evaluating pair: pair_12.npz
+RANSAC:      inliers = 1387 / 5427
+RANSAC:      median epipolar error = 1.2340
+NG-guided:   inliers = 1174 / 5427
+NG-guided:   median epipolar error = 1.5588
+
+Saved image visualization to viz/viz_pair_12.png
+Evaluating pair: pair_13.npz
+RANSAC:      inliers = 1406 / 5252
+RANSAC:      median epipolar error = 1.0390
+NG-guided:   inliers = 1076 / 5252
+NG-guided:   median epipolar error = 1.7517
+
+Saved image visualization to viz/viz_pair_13.png
+Evaluating pair: pair_14.npz
+RANSAC:      inliers = 2430 / 7877
+RANSAC:      median epipolar error = 0.9502
+NG-guided:   inliers = 1456 / 7877
+NG-guided:   median epipolar error = 2.2554

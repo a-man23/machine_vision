@@ -77,8 +77,7 @@ def run_ng_guided_filtered(model, pts1, pts2, keep_ratio=0.5, thresh=0.5):
     return F, inliers_all, err_all, probs
 
 def get_left_image_path(pair_fname):
-    idx_str = pair_fname.split('_')[1].split('.')[0]   # '00'
-    idx = int(idx_str)
+    idx = pair_fname.split('_')[1].split('.')[0]   # '00'
     return os.path.join("images", "real", f"img{idx}a.jpg")
 
 
@@ -244,7 +243,7 @@ def main():
         print(f"NG-guided:   median epipolar error = {np.median(err_ng):.4f}")
         print("")
 
-        pair_id = fname.replace(".npz", "")  # e.g. 'pair_00'
+        pair_id = fname.split('_')[1].split('.')[0]  # '00'
         pair_names.append(pair_id)
         r_inliers.append(int(mask_r.sum()))
         ng_inliers.append(int(mask_ng.sum()))

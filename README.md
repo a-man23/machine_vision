@@ -10,6 +10,8 @@ synthetic end-to-end training, and a real-image transfer evaluation pipeline.
 
 **Authors:** Donovan Holgado (`dmh313`), Tony Lu (`hl990`), Aman Patel (`anp181`)
 
+**Final Report:** [Final Report](Final%20Report.pdf)
+
 ## What It Does
 
 - Generates synthetic sparse correspondences with controllable geometry, noise,

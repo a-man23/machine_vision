@@ -178,17 +178,6 @@ machine_vision/
     └── viz/                  # transfer eval plots + eval_log.txt
 ```
 
-## Current Limitations
-
-- Transfer eval uses the guidance net as a **correspondence filter**, then
-  OpenCV RANSAC—not the full C++ guided sampler used in training/demo
-- Pose-loss training / pose-error reporting are not enabled
-- Synthetic Lowe ratios are sampled from hand-crafted distributions, not real
-  descriptors
-- OpenCV paths in `setup.py` (and some DLL hooks) are machine-specific
-- CUDA is assumed in several scripts; no formal `requirements.txt` or test suite
-- Paper `traindata/` packs are not checked in (gitignored / download separately)
-
 ## References
 
 - Brachmann, E., & Rother, C. (2019). Neural-Guided RANSAC: Learning Where to
